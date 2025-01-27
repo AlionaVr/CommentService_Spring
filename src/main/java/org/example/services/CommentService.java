@@ -1,24 +1,25 @@
 package org.example.services;
 
-import org.example.proxies.CommentNotificationProxy;
+import org.example.ToLog;
 import org.example.repositories.Comment;
-import org.example.repositories.CommentRepository;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.logging.Logger;
 
 @Service
 public class CommentService {
-    private final CommentRepository commentRepository;
-    private final CommentNotificationProxy commentNotificationProxy;
-
-    // this class has only one constructor, that's why @Autowired is not needed
-    public CommentService(CommentRepository commentRepository, @Qualifier("PUSH") CommentNotificationProxy commentNotificationProxy) {
-        this.commentRepository = commentRepository;
-        this.commentNotificationProxy = commentNotificationProxy;
-    }
+    private final Logger logger = Logger.getLogger(CommentService.class.getName());
 
     public void publishComment(Comment comment) {
-        commentRepository.storeComment(comment);
-        commentNotificationProxy.sendComment(comment);
+        logger.info("Publishing comment:" + comment.getText());
+    }
+
+    @ToLog
+    public void deleteComment(Comment comment) {
+        logger.info("Deleting comment:" + comment.getText());
+    }
+
+    public void editComment(Comment comment) {
+        logger.info("Editing comment:" + comment.getText());
     }
 }
