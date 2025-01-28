@@ -1,24 +1,11 @@
 package org.example;
 
-import org.example.config.ProjectConfiguration;
-import org.example.repositories.Comment;
-import org.example.services.CommentService;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.logging.Logger;
-
+@SpringBootApplication
 public class Main {
-    private static Logger logger = Logger.getLogger(Main.class.getName());
     public static void main(String[] args) {
-        var context = new AnnotationConfigApplicationContext(ProjectConfiguration.class);
-        var service = context.getBean(CommentService.class);
-
-        var comment = new Comment();
-        comment.setAuthor("Laurentiu");
-        comment.setText("Demo comment");
-
-        service.publishComment(comment);
-        service.deleteComment(comment);
-        service.editComment(comment);
+        SpringApplication.run(Main.class, args);
     }
 }
